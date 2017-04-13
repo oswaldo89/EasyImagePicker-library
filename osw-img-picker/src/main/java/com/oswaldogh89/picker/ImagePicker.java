@@ -1,4 +1,4 @@
-package com.oswaldogh89.novus_logger;
+package com.oswaldogh89.picker;
 /**
  * Created by oswaldogh89 on 13/04/17.
  */
@@ -24,15 +24,15 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rebus.bottomdialog.BottomDialog;
 
-public class NovusPicker extends LinearLayout {
+public class ImagePicker extends LinearLayout {
 
     private CircleImageView im2, im3, im4, im5, im6, im7, im8, im9, im10, im11;
-    private BottomDialogMaterial dialog;
+    private DialogOptions dialog;
     private Activity mainactivity;
     private HashMap<Integer, String> hmap;
     private TextView count;
 
-    public NovusPicker(final Context context, @Nullable AttributeSet attrs) {
+    public ImagePicker(final Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setOrientation(LinearLayout.HORIZONTAL);
         setGravity(Gravity.CENTER);
@@ -42,7 +42,7 @@ public class NovusPicker extends LinearLayout {
         count = (TextView) findViewById(R.id.CountImg);
         hmap = new HashMap<>();
 
-        dialog = new BottomDialogMaterial(context);
+        dialog = new DialogOptions(context);
         dialog.title("Seleccionar Imagen");
         dialog.canceledOnTouchOutside(true);
         dialog.cancelable(true);

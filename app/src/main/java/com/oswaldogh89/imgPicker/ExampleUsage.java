@@ -1,21 +1,21 @@
-package com.oswaldogh89.novuslibraries;
+package com.oswaldogh89.imgPicker;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.oswaldogh89.novus_logger.NovusPicker;
+import com.oswaldogh89.picker.ImagePicker;
 
-public class MainActivity extends AppCompatActivity {
-    private NovusPicker picker;
+public class ExampleUsage extends AppCompatActivity {
+    private ImagePicker picker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        picker = (NovusPicker) findViewById(R.id.picker);
-        picker.setMainactivity(MainActivity.this);
+        picker = (ImagePicker) findViewById(R.id.picker);
+        picker.setMainactivity(ExampleUsage.this);
         picker.SetBorderImageColor("#075e55");
     }
 

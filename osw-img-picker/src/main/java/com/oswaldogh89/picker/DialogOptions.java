@@ -1,4 +1,4 @@
-package com.oswaldogh89.novus_logger;
+package com.oswaldogh89.picker;
 
 /**
  * Created by oswaldogh89 on 13/04/17.
@@ -42,11 +42,11 @@ import rebus.bottomdialog.*;
 /**
  * Created by raphaelbussa on 19/01/16.
  */
-public class BottomDialogMaterial {
+public class DialogOptions {
 
     private CustomDialog customDialog;
 
-    public BottomDialogMaterial(Context context) {
+    public DialogOptions(Context context) {
         customDialog = new CustomDialog(context);
     }
 
