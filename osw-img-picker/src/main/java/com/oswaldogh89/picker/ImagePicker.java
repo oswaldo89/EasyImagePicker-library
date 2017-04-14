@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -19,10 +18,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -162,68 +161,48 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     private void EliminarImagen(int ID) {
         HashMap<Integer, String> hmaps = hmap;
         if (ID == R.id.im2) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 2);
             hmap.remove(2);
         } else if (ID == R.id.im3) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 3);
             hmap.remove(3);
         } else if (ID == R.id.im4) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 4);
             hmap.remove(4);
         } else if (ID == R.id.im5) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 5);
             hmap.remove(5);
         } else if (ID == R.id.im6) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 6);
             hmap.remove(6);
         } else if (ID == R.id.im7) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 7);
             hmap.remove(7);
         } else if (ID == R.id.im8) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 8);
             hmap.remove(8);
         } else if (ID == R.id.im9) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 9);
             hmap.remove(9);
         } else if (ID == R.id.im10) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 10);
             hmap.remove(10);
         } else if (ID == R.id.im11) {
-            Log.v("IMAGENES_AGREGADAS", "Se elimina la : " + 11);
             hmap.remove(11);
         }
     }
 
     private String AbrirImagen(int ID) {
         if (ID == R.id.im2) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 2);
             return hmap.get(2);
         } else if (ID == R.id.im3) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 3);
             return hmap.get(3);
         } else if (ID == R.id.im4) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 4);
             return hmap.get(4);
         } else if (ID == R.id.im5) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 5);
             return hmap.get(5);
         } else if (ID == R.id.im6) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 6);
             return hmap.get(6);
         } else if (ID == R.id.im7) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 7);
             return hmap.get(7);
         } else if (ID == R.id.im8) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 8);
             return hmap.get(8);
         } else if (ID == R.id.im9) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 9);
             return hmap.get(9);
         } else if (ID == R.id.im10) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 10);
             return hmap.get(10);
         } else if (ID == R.id.im11) {
-            Log.v("IMAGENES_AGREGADAS", "Se agrega la : " + 11);
             return hmap.get(11);
         }
 
@@ -240,13 +219,45 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     }
 
     private void ChangeVisible(CircleImageView image, Intent imageReturnedIntent, int position) {
-
         Uri path = imageReturnedIntent.getData();
         image.setVisibility(View.VISIBLE);
-
         Glide.with(getContext()).load(path).override(150, 150).into(image);
         hmap.put(position, path.getPath());
         count.setText("Imagenes: " + getImageCount() + "/10");
+    }
+
+    private void ChangeVisibleFromUrl(CircleImageView image, String url, int position) {
+        image.setVisibility(View.VISIBLE);
+        Glide.with(getContext()).load(url).centerCrop().into(image);
+        hmap.put(position, url);
+        count.setText("Imagenes: " + getImageCount() + "/10");
+    }
+
+    public void addImagesFromUrl(ArrayList<String> urls) {
+        for (int i = 0; i < urls.size(); i++) {
+            if (i == 0) {
+                ChangeVisibleFromUrl(im2, urls.get(i), 2);
+            } else if (i == 1) {
+                ChangeVisibleFromUrl(im3, urls.get(i), 3);
+            } else if (i == 2) {
+                ChangeVisibleFromUrl(im4, urls.get(i), 4);
+            } else if (i == 3) {
+                ChangeVisibleFromUrl(im5, urls.get(i), 5);
+            } else if (i == 4) {
+                ChangeVisibleFromUrl(im6, urls.get(i), 6);
+            } else if (i == 5) {
+                ChangeVisibleFromUrl(im7, urls.get(i), 7);
+            } else if (i == 6) {
+                ChangeVisibleFromUrl(im8, urls.get(i), 8);
+            } else if (i == 7) {
+                ChangeVisibleFromUrl(im9, urls.get(i), 9);
+            } else if (i == 8) {
+                ChangeVisibleFromUrl(im10, urls.get(i), 10);
+            } else if (i == 9) {
+                ChangeVisibleFromUrl(im11, urls.get(i), 11);
+            }
+        }
+
     }
 
     @Override
@@ -260,10 +271,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         dialog2.setOnItemSelectedListener(new BottomDialog.OnItemSelectedListener() {
             @Override
             public boolean onItemSelected(int id) {
-                if (id == R.id.favorite_action) {
-                    Toast.makeText(mainactivity, "Agregada como Favorita ", Toast.LENGTH_SHORT).show();
-                    return true;
-                } else if (id == R.id.delete_action) {
+                if (id == R.id.delete_action) {
                     view.setVisibility(View.GONE);
                     EliminarImagen(ID);
                     count.setText("Imagenes: " + getImageCount() + "/10");

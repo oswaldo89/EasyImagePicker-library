@@ -10,12 +10,12 @@
         android:title="Ver imagen completa"
         app:showAsAction="always" />
 
-    <item
+    <!--<item
         android:id="@+id/favorite_action"
         android:icon="@drawable/favorite_icon"
         android:orderInCategory="100"
         android:title="Agregar como imagen principal"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
 
     <item
         android:id="@+id/delete_action"

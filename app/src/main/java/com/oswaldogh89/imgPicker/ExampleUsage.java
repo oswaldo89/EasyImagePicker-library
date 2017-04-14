@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.oswaldogh89.picker.ImagePicker;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,14 +27,18 @@ public class ExampleUsage extends AppCompatActivity {
         picker.enableDelateAll(true);
 
 
+        //Si vas a cargar imagenes en el control desde una URL
+        ArrayList<String> urls = new ArrayList<>();
+        urls.add("https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2017/01/19/15/earth-from-space.jpg");
+        urls.add("http://www.slate.com/content/dam/slate/blogs/bad_astronomy/2016/03/09/shutterstock_earthfromhubble.jpg.CROP.original-original.jpg");
+        picker.addImagesFromUrl(urls);
+
         Button btnUpload = (Button) findViewById(R.id.UploadImages);
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HashMap<Integer, String> images = picker.GetPathImages();
-
-
-                for(Map.Entry entry: images.entrySet()){
+                for (Map.Entry entry : images.entrySet()) {
                     Log.v("IMAGENES_AGREGADAS", "TAMAÑO : " + entry.getValue());
                 }
             }
