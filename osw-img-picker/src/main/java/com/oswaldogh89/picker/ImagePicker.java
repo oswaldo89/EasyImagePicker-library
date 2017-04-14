@@ -16,6 +16,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -24,10 +25,10 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rebus.bottomdialog.BottomDialog;
 
-public class ImagePicker extends LinearLayout {
+public class ImagePicker extends LinearLayout implements View.OnClickListener {
 
     private CircleImageView im2, im3, im4, im5, im6, im7, im8, im9, im10, im11;
-    private DialogOptions dialog;
+    private DialogOptions dialog, dialog2;
     private Activity mainactivity;
     private HashMap<Integer, String> hmap;
     private TextView count;
@@ -41,6 +42,7 @@ public class ImagePicker extends LinearLayout {
         ImageView addNew = (ImageView) findViewById(R.id.AddNew);
         count = (TextView) findViewById(R.id.CountImg);
         hmap = new HashMap<>();
+        initImages();
 
         dialog = new DialogOptions(context);
         dialog.title("Seleccionar Imagen");
@@ -70,6 +72,17 @@ public class ImagePicker extends LinearLayout {
                 dialog.show();
             }
         });
+
+        im2.setOnClickListener(this);
+        im3.setOnClickListener(this);
+        im4.setOnClickListener(this);
+        im5.setOnClickListener(this);
+        im6.setOnClickListener(this);
+        im7.setOnClickListener(this);
+        im8.setOnClickListener(this);
+        im9.setOnClickListener(this);
+        im10.setOnClickListener(this);
+        im11.setOnClickListener(this);
     }
 
     public void setMainactivity(Activity mainactivity) {
@@ -77,16 +90,6 @@ public class ImagePicker extends LinearLayout {
     }
 
     public void SetBorderImageColor(String color) {
-        im2 = (CircleImageView) findViewById(R.id.im2);
-        im3 = (CircleImageView) findViewById(R.id.im3);
-        im4 = (CircleImageView) findViewById(R.id.im4);
-        im5 = (CircleImageView) findViewById(R.id.im5);
-        im6 = (CircleImageView) findViewById(R.id.im6);
-        im7 = (CircleImageView) findViewById(R.id.im7);
-        im8 = (CircleImageView) findViewById(R.id.im8);
-        im9 = (CircleImageView) findViewById(R.id.im9);
-        im10 = (CircleImageView) findViewById(R.id.im10);
-        im11 = (CircleImageView) findViewById(R.id.im11);
         im2.setBorderColor(Color.parseColor(color));
         im3.setBorderColor(Color.parseColor(color));
         im4.setBorderColor(Color.parseColor(color));
@@ -97,6 +100,19 @@ public class ImagePicker extends LinearLayout {
         im9.setBorderColor(Color.parseColor(color));
         im10.setBorderColor(Color.parseColor(color));
         im11.setBorderColor(Color.parseColor(color));
+    }
+
+    private void initImages() {
+        im2 = (CircleImageView) findViewById(R.id.im2);
+        im3 = (CircleImageView) findViewById(R.id.im3);
+        im4 = (CircleImageView) findViewById(R.id.im4);
+        im5 = (CircleImageView) findViewById(R.id.im5);
+        im6 = (CircleImageView) findViewById(R.id.im6);
+        im7 = (CircleImageView) findViewById(R.id.im7);
+        im8 = (CircleImageView) findViewById(R.id.im8);
+        im9 = (CircleImageView) findViewById(R.id.im9);
+        im10 = (CircleImageView) findViewById(R.id.im10);
+        im11 = (CircleImageView) findViewById(R.id.im11);
     }
 
     public void AddNewImage(Intent imageReturnedIntent) {
@@ -141,4 +157,27 @@ public class ImagePicker extends LinearLayout {
         count.setText("Imagenes: " + getImageCount());
     }
 
+    @Override
+    public void onClick(final View view) {
+        dialog2 = new DialogOptions(getContext());
+        dialog2.title("Opciones de la imagen");
+        dialog2.canceledOnTouchOutside(true);
+        dialog2.cancelable(true);
+        dialog2.inflateMenu(R.menu.options_menu);
+        dialog2.setOnItemSelectedListener(new BottomDialog.OnItemSelectedListener() {
+            @Override
+            public boolean onItemSelected(int id) {
+                if (id == R.id.favorite_action) {
+                    Toast.makeText(mainactivity, "Agregada como Favorita", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (id == R.id.delete_action) {
+                    view.setVisibility(View.GONE);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+        dialog2.show();
+    }
 }
