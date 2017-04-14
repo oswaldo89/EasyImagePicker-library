@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     private Activity mainactivity;
     private HashMap<Integer, String> hmap;
     private TextView count;
+    private Button BorrarTodas;
 
     public ImagePicker(final Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -44,6 +46,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         mContext = this;
 
         ImageView addNew = (ImageView) findViewById(R.id.AddNew);
+        BorrarTodas = (Button) findViewById(R.id.BorrarTodas);
         count = (TextView) findViewById(R.id.CountImg);
         hmap = new HashMap<>();
         initImages();
@@ -229,6 +232,11 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
 
     public int getImageCount() {
         return hmap.size();
+    }
+
+    public void enableDelateAll(Boolean enble) {
+        if (enble)
+            BorrarTodas.setVisibility(View.VISIBLE);
     }
 
     private void ChangeVisible(CircleImageView image, Intent imageReturnedIntent, int position) {

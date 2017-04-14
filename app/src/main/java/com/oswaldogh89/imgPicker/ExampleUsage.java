@@ -23,6 +23,7 @@ public class ExampleUsage extends AppCompatActivity {
         picker = (ImagePicker) findViewById(R.id.picker);
         picker.setMainactivity(ExampleUsage.this);
         picker.SetBorderImageColor("#075e55");
+        picker.enableDelateAll(true);
 
 
         Button btnUpload = (Button) findViewById(R.id.UploadImages);
