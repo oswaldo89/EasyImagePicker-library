@@ -110,4 +110,8 @@ for (Map.Entry entry : images.entrySet()) {
 }
 
 ```
- 
+
+Librerias usadas
+- https://github.com/bumptech/glide
+- https://github.com/hdodenhof/CircleImageView
+- https://github.com/rebus007/BottomDialog 
