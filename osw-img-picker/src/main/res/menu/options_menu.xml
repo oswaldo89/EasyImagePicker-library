@@ -2,6 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/see_action"
+        android:icon="@drawable/eye_icon"
+        android:orderInCategory="100"
+        android:title="Ver imagen completa"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/favorite_action"
         android:icon="@drawable/favorite_icon"
