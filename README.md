@@ -59,7 +59,7 @@ Podemos Agregar un color hexadecimal, para el contorno de las imagenes que se va
 picker.SetBorderImageColor("#075e55");
 ```
 
-Podemos Habilitar/Inhabilitar el boton para borrar todas las imagenes, ( funcionalidad del boton no agregada )
+Podemos Habilitar/Inhabilitar el boton para borrar todas las imagenes.
 ```java
 picker.enableDelateAll(false);
 ```
