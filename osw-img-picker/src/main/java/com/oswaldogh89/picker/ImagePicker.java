@@ -46,6 +46,12 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
 
         ImageView addNew = (ImageView) findViewById(R.id.AddNew);
         BorrarTodas = (Button) findViewById(R.id.BorrarTodas);
+        BorrarTodas.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAllImages();
+            }
+        });
         count = (TextView) findViewById(R.id.CountImg);
         hmap = new HashMap<>();
         initImages();
@@ -181,6 +187,21 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         } else if (ID == R.id.im11) {
             hmap.remove(11);
         }
+    }
+
+    private void deleteAllImages() {
+        hmap.clear();
+        im2.setVisibility(View.GONE);
+        im3.setVisibility(View.GONE);
+        im4.setVisibility(View.GONE);
+        im5.setVisibility(View.GONE);
+        im6.setVisibility(View.GONE);
+        im7.setVisibility(View.GONE);
+        im8.setVisibility(View.GONE);
+        im9.setVisibility(View.GONE);
+        im10.setVisibility(View.GONE);
+        im11.setVisibility(View.GONE);
+        count.setText("Imagenes: " + getImageCount() + "/10");
     }
 
     private String AbrirImagen(int ID) {
