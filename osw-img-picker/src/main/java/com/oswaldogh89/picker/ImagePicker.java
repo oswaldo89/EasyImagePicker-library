@@ -40,8 +40,8 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     private TextView count;
     private Button BorrarTodas;
 
-    public final int REQUEST_CAMERA = 8848;
-    public final int REQUEST_GALLERY = 8849;
+    public static final int REQUEST_CAMERA = 8848;
+    public static final int REQUEST_GALLERY = 8849;
 
     public ImagePicker(final Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
