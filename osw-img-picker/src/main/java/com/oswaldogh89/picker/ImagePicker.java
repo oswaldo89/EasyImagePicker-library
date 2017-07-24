@@ -112,6 +112,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
 
     public void setFragment(Fragment fragment){
         this.fragment = fragment;
+        this.calledFromFragment = true;
     }
 
     public void SetBorderImageColor(String color) {
