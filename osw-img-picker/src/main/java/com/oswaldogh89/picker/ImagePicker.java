@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -33,9 +34,14 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     private CircleImageView im2, im3, im4, im5, im6, im7, im8, im9, im10, im11;
     private DialogOptions dialog;
     private Activity mainactivity;
+    private Fragment fragment;
+    private boolean calledFromFragment = false;
     private HashMap<Integer, String> hmap;
     private TextView count;
     private Button BorrarTodas;
+
+    public final int REQUEST_CAMERA = 8848;
+    public final int REQUEST_GALLERY = 8849;
 
     public ImagePicker(final Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -67,11 +73,19 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
             public boolean onItemSelected(int id) {
                 if (id == R.id.camera_action) {
                     Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    mainactivity.startActivityForResult(takePicture, 0);
+                    if(calledFromFragment){
+                        fragment.startActivityForResult(takePicture,REQUEST_CAMERA);
+                    }else{
+                        mainactivity.startActivityForResult(takePicture, REQUEST_CAMERA);
+                    }
                     return true;
                 } else if (id == R.id.gallery_action) {
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    mainactivity.startActivityForResult(pickPhoto, 1);
+                    if(calledFromFragment){
+                        fragment.startActivityForResult(pickPhoto, REQUEST_GALLERY);
+                    }else{
+                        mainactivity.startActivityForResult(pickPhoto, REQUEST_GALLERY);
+                    }
                     return true;
                 } else {
                     return false;
@@ -94,6 +108,10 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
 
     public void setMainactivity(Activity mainactivity) {
         this.mainactivity = mainactivity;
+    }
+
+    public void setFragment(Fragment fragment){
+        this.fragment = fragment;
     }
 
     public void SetBorderImageColor(String color) {
