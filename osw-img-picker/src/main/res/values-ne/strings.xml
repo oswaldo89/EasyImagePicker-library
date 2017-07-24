@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eip_remove">हटाउनु</string>
+    <string name="eip_camera">क्यामेरा</string>
+    <string name="eip_gallery">ग्यालरी</string>
+    <string name="eip_view_full_image">ठूलो तस्बिर हेर्नुहोस्</string>
+    <string name="eip_delete_all">सबै मेटाउनु</string>
+    <string name="eip_images">तस्बिर:</string>
+    <string name="eip_image_options">तस्बिर विकल्पहरू</string>
+    <string name="eip_select_image">तस्बिर चयन</string>
+</resources>

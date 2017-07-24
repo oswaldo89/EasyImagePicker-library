@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">novus-logger</string>
     <string name="eip_camera">Camara</string>
     <string name="eip_gallery">Galeria</string>
     <string name="eip_view_full_image">Ver imagen completa</string>

@@ -6,10 +6,14 @@ package com.oswaldogh89.picker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -21,7 +25,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,9 +41,16 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     private CircleImageView im2, im3, im4, im5, im6, im7, im8, im9, im10, im11;
     private DialogOptions dialog;
     private Activity mainactivity;
+    private Fragment fragment;
+    private boolean calledFromFragment = false;
     private HashMap<Integer, String> hmap;
     private TextView count;
     private Button BorrarTodas;
+
+    public static final int REQUEST_CAMERA = 8848;
+    public static final int REQUEST_GALLERY = 8849;
+
+    String mCurrentPhotoPath;
 
     public ImagePicker(final Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -53,11 +68,12 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
             }
         });
         count = (TextView) findViewById(R.id.CountImg);
+        count.setText(context.getString(R.string.eip_images) + " 0");
         hmap = new HashMap<>();
         initImages();
 
         dialog = new DialogOptions(context);
-        dialog.title("Seleccionar Imagen");
+        dialog.title(context.getString(R.string.eip_select_image));
         dialog.canceledOnTouchOutside(true);
         dialog.cancelable(true);
         dialog.inflateMenu(R.menu.upload_menu);
@@ -65,12 +81,15 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
             @Override
             public boolean onItemSelected(int id) {
                 if (id == R.id.camera_action) {
-                    Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    mainactivity.startActivityForResult(takePicture, 0);
+                    dispatchTakePictureIntent();
                     return true;
                 } else if (id == R.id.gallery_action) {
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    mainactivity.startActivityForResult(pickPhoto, 1);
+                    if(calledFromFragment){
+                        fragment.startActivityForResult(pickPhoto, REQUEST_GALLERY);
+                    }else{
+                        mainactivity.startActivityForResult(pickPhoto, REQUEST_GALLERY);
+                    }
                     return true;
                 } else {
                     return false;
@@ -95,6 +114,11 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         this.mainactivity = mainactivity;
     }
 
+    public void setFragment(Fragment fragment){
+        this.fragment = fragment;
+        this.calledFromFragment = true;
+    }
+
     public void SetBorderImageColor(String color) {
         im2.setBorderColor(Color.parseColor(color));
         im3.setBorderColor(Color.parseColor(color));
@@ -109,7 +133,6 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     }
 
     private void initImages() {
-
         im2 = (CircleImageView) findViewById(R.id.im2);
         im3 = (CircleImageView) findViewById(R.id.im3);
         im4 = (CircleImageView) findViewById(R.id.im4);
@@ -201,7 +224,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         im9.setVisibility(View.GONE);
         im10.setVisibility(View.GONE);
         im11.setVisibility(View.GONE);
-        count.setText("Imagenes: " + getImageCount() + "/10");
+        count.setText(mainactivity.getString(R.string.eip_images) + " " + getImageCount() + "/10");
     }
 
     private String AbrirImagen(int ID) {
@@ -240,18 +263,26 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     }
 
     private void ChangeVisible(CircleImageView image, Intent imageReturnedIntent, int position) {
-        Uri path = imageReturnedIntent.getData();
+        if(imageReturnedIntent!=null) {
+            Uri path = imageReturnedIntent.getData();
+            Glide.with(getContext()).load(path).override(150, 150).into(image);
+            hmap.put(position, path.getPath());
+        }else{
+            File f = new File(mCurrentPhotoPath);
+            Uri contentUri = Uri.fromFile(f);
+            Glide.with(getContext()).load(contentUri).override(150, 150).into(image);
+            hmap.put(position,contentUri.getPath());
+        }
         image.setVisibility(View.VISIBLE);
-        Glide.with(getContext()).load(path).override(150, 150).into(image);
-        hmap.put(position, path.getPath());
-        count.setText("Imagenes: " + getImageCount() + "/10");
+        count.setText(mainactivity.getString(R.string.eip_images) + " " + getImageCount() + "/10");
+
     }
 
     private void ChangeVisibleFromUrl(CircleImageView image, String url, int position) {
         image.setVisibility(View.VISIBLE);
         Glide.with(getContext()).load(url).centerCrop().into(image);
         hmap.put(position, url);
-        count.setText("Imagenes: " + getImageCount() + "/10");
+        count.setText(mainactivity.getString(R.string.eip_images) + " " + getImageCount() + "/10");
     }
 
     public void addImagesFromUrl(ArrayList<String> urls) {
@@ -285,7 +316,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     public void onClick(final View view) {
         final int ID = view.getId();
         DialogOptions dialog2 = new DialogOptions(getContext());
-        dialog2.title("Opciones de la imagen");
+        dialog2.title(mainactivity.getString(R.string.eip_image_options));
         dialog2.canceledOnTouchOutside(true);
         dialog2.cancelable(true);
         dialog2.inflateMenu(R.menu.options_menu);
@@ -295,7 +326,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
                 if (id == R.id.delete_action) {
                     view.setVisibility(View.GONE);
                     EliminarImagen(ID);
-                    count.setText("Imagenes: " + getImageCount() + "/10");
+                    count.setText(mainactivity.getString(R.string.eip_images) + " " + getImageCount() + "/10");
                     return true;
                 } else if (id == R.id.see_action) {
                     String val = AbrirImagen(ID);
@@ -308,4 +339,50 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         });
         dialog2.show();
     }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = mainactivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(mainactivity.getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                ex.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(mainactivity,
+                        "com.oswaldogh89.imgpicker",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                if(calledFromFragment){
+                    fragment.startActivityForResult(takePictureIntent,REQUEST_CAMERA);
+                }else{
+                    mainactivity.startActivityForResult(takePictureIntent, REQUEST_CAMERA);
+                }
+            }
+        }
+    }
+
+
+
 }

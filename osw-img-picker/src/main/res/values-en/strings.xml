@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eip_camera">Camera</string>
+    <string name="eip_gallery">Gallery</string>
+    <string name="eip_remove">Remove</string>
+    <string name="eip_view_full_image">View Full Image</string>
+    <string name="eip_delete_all">Delete All</string>
+    <string name="eip_images">Images:</string>
+    <string name="eip_image_options">Image Options</string>
+    <string name="eip_select_image">Select Image</string>
+</resources>
