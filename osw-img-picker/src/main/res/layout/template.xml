@@ -124,7 +124,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="Imagenes: 0"
+            android:text="@string/eip_images"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -141,7 +141,7 @@
                 android:layout_height="43dp"
                 android:layout_marginTop="3dp"
                 android:enabled="true"
-                android:text="Borrar Todas"
+                android:text="@string/eip_delete_all"
                 android:visibility="gone" />
 
 

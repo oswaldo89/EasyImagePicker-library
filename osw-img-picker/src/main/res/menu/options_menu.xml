@@ -7,7 +7,7 @@
         android:id="@+id/see_action"
         android:icon="@drawable/eye_icon"
         android:orderInCategory="100"
-        android:title="Ver imagen completa"
+        android:title="@string/eip_view_full_image"
         app:showAsAction="always" />
 
     <!--<item
@@ -21,6 +21,6 @@
         android:id="@+id/delete_action"
         android:icon="@drawable/delete_icon"
         android:orderInCategory="100"
-        android:title="Eliminar"
+        android:title="@string/eip_remove"
         app:showAsAction="always" />
 </menu>

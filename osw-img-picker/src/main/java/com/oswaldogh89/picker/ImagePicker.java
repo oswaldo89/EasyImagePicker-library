@@ -57,7 +57,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         initImages();
 
         dialog = new DialogOptions(context);
-        dialog.title("Seleccionar Imagen");
+        dialog.title(context.getString(R.string.eip_select_image));
         dialog.canceledOnTouchOutside(true);
         dialog.cancelable(true);
         dialog.inflateMenu(R.menu.upload_menu);
@@ -201,7 +201,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         im9.setVisibility(View.GONE);
         im10.setVisibility(View.GONE);
         im11.setVisibility(View.GONE);
-        count.setText("Imagenes: " + getImageCount() + "/10");
+        count.setText(mainactivity.getString(R.string.eip_images) + " " + getImageCount() + "/10");
     }
 
     private String AbrirImagen(int ID) {
@@ -244,14 +244,14 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
         image.setVisibility(View.VISIBLE);
         Glide.with(getContext()).load(path).override(150, 150).into(image);
         hmap.put(position, path.getPath());
-        count.setText("Imagenes: " + getImageCount() + "/10");
+        count.setText(mainactivity.getString(R.string.eip_images) + " " + getImageCount() + "/10");
     }
 
     private void ChangeVisibleFromUrl(CircleImageView image, String url, int position) {
         image.setVisibility(View.VISIBLE);
         Glide.with(getContext()).load(url).centerCrop().into(image);
         hmap.put(position, url);
-        count.setText("Imagenes: " + getImageCount() + "/10");
+        count.setText(mainactivity.getString(R.string.eip_images) + " " + getImageCount() + "/10");
     }
 
     public void addImagesFromUrl(ArrayList<String> urls) {
@@ -285,7 +285,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
     public void onClick(final View view) {
         final int ID = view.getId();
         DialogOptions dialog2 = new DialogOptions(getContext());
-        dialog2.title("Opciones de la imagen");
+        dialog2.title(mainactivity.getString(R.string.eip_image_options));
         dialog2.canceledOnTouchOutside(true);
         dialog2.cancelable(true);
         dialog2.inflateMenu(R.menu.options_menu);
@@ -295,7 +295,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
                 if (id == R.id.delete_action) {
                     view.setVisibility(View.GONE);
                     EliminarImagen(ID);
-                    count.setText("Imagenes: " + getImageCount() + "/10");
+                    count.setText(mainactivity.getString(R.string.eip_images) + " " + getImageCount() + "/10");
                     return true;
                 } else if (id == R.id.see_action) {
                     String val = AbrirImagen(ID);

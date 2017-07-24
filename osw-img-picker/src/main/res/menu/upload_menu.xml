@@ -6,13 +6,13 @@
         android:id="@+id/camera_action"
         android:icon="@drawable/camera_icon"
         android:orderInCategory="100"
-        android:title="Camara"
+        android:title="@string/eip_camera"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/gallery_action"
         android:icon="@drawable/gallery_icon"
         android:orderInCategory="100"
-        android:title="Galeria"
+        android:title="@string/eip_gallery"
         app:showAsAction="always" />
 </menu>
