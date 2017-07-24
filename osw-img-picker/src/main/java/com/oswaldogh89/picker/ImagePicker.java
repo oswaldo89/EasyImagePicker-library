@@ -53,6 +53,7 @@ public class ImagePicker extends LinearLayout implements View.OnClickListener {
             }
         });
         count = (TextView) findViewById(R.id.CountImg);
+        count.setText(context.getString(R.string.eip_images) + " 0");
         hmap = new HashMap<>();
         initImages();
 
