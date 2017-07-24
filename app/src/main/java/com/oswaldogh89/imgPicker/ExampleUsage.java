@@ -48,12 +48,12 @@ public class ExampleUsage extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         switch (requestCode) {
-            case 0:
+            case ImagePicker.REQUEST_CAMERA:
                 if (resultCode == RESULT_OK) {
                     picker.AddNewImage(imageReturnedIntent);
                 }
                 break;
-            case 1:
+            case ImagePicker.REQUEST_GALLERY:
                 if (resultCode == RESULT_OK) {
                     picker.AddNewImage(imageReturnedIntent);
                 }
