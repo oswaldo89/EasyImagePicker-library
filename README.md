@@ -32,7 +32,7 @@ Agregarmos la url de la dependencia al build.gradle del folder /app
 
 ```java
 dependencies {
-   compile 'com.github.oswaldo89:EasyImagePicker:1.0.1'
+   compile 'com.github.oswaldo89:EasyImagePicker-library:1.0.2'
 }
 ```
 
